@@ -1,0 +1,11 @@
+{
+  "name": "mathtrainer",
+  "version": "1.0.0",
+  "description": "to train math",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "author": "butterflyeffect70",
+  "license": "MIT"
+}
