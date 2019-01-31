@@ -1,17 +1,42 @@
 setInterval(()=>{
     getrandmathtask()
-        .then(res => console.log(res[0] +" "+ res[2] +" "+ res[1] + " = " + eval(res[0] +""+ res[2] +""+ res[1])))
+        .then(res => filterandbuildtask(res[2],res[0],res[1])
+                        .then(res => console.log(res))
+                        .catch(err => console.log(err)) )
         .catch(err => console.log(err))
 },1000)
 
 function getrandnum(){
     return new Promise( (res,rej) => {
         try {
-            res(Math.floor(Math.random()*101))
+            var x = Math.floor(Math.random()*11)
+            if(x == 0){
+                x = getrandnum()
+                    .then(res =>  { return res })
+                    .catch(err => rej(err))
+                res(x)
+            } else {
+                res(x)
+            }
         } catch (error) {
             rej(error)
         }
     })
+}
+
+function filterandbuildtask(sign, num1, num2){
+    return new Promise( (res,rej) => {
+        try {
+            if (sign == "/") {
+                var x = num1 * num2
+                res(x +" "+ sign +" "+ num2 + " = " + eval(x +""+ sign +""+ num2))
+            } else {
+                res(num1 +" "+ sign +" "+ num2 + " = " + eval(num1 +""+ sign +""+ num2))
+            }
+        } catch (error) {
+            rej(error)
+        }
+    })  
 }
 
 function getrandop(){
@@ -27,7 +52,7 @@ function getrandop(){
 
 function getrandmathtask(){
     return new Promise( (res,rej) => {
-
+        
         var num1 = getrandnum()
             .then(res => { return res })
             .catch(err => rej(err))
