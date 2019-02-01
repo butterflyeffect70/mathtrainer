@@ -7,20 +7,8 @@ setInterval(()=>{
 },1000)
 
 function getrandnum(){
-    return new Promise( (res,rej) => {
-        try {
-            var x = Math.floor(Math.random()*11)
-            if(x == 0){
-                x = getrandnum()
-                    .then(res =>  { return res })
-                    .catch(err => rej(err))
-                res(x)
-            } else {
-                res(x)
-            }
-        } catch (error) {
-            rej(error)
-        }
+    return new Promise( res  => {
+        res(Math.floor(Math.random()*10)+1)
     })
 }
 
@@ -30,6 +18,9 @@ function filterandbuildtask(sign, num1, num2){
             if (sign == "/") {
                 var x = num1 * num2
                 res(x +" "+ sign +" "+ num2 + " = " + eval(x +""+ sign +""+ num2))
+            }else if(sign == "-" && num1 == num2){
+                num1 += 1
+                res(num1 +" "+ sign +" "+ num2 + " = " + eval(num1 +""+ sign +""+ num2))
             } else {
                 res(num1 +" "+ sign +" "+ num2 + " = " + eval(num1 +""+ sign +""+ num2))
             }
