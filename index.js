@@ -1,9 +1,19 @@
-setInterval(()=>{
-    getrandmathtask()
-        .then(res => filterandbuildtask(res[2],res[0],res[1])
-                        .then(res => console.log(res))
-                        .catch(err => console.log(err)) )
-        .catch(err => console.log(err))
+var readlineSync = require('readline-sync');
+
+setInterval( async ()=>{
+    var mathtask = await getrandmathtask()
+        .then( res => filterandbuildtask(res[2], res[0], res[1])
+                .then(res => { return res })
+                .catch(err => console.log(err))
+        ).catch(err => console.log(err))
+
+        var result = await readlineSync.question(mathtask[0] + ' ' + mathtask[1] + ' ' + mathtask[2] + '\n')
+        if(result == mathtask[3]){
+            console.log('Richtig')
+        } else {
+            console.log('Falsch')
+        }
+        
 },1000)
 
 function getrandnum(){
@@ -12,17 +22,27 @@ function getrandnum(){
     })
 }
 
+
+
+
 function filterandbuildtask(sign, num1, num2){
     return new Promise( (res,rej) => {
+        var result
         try {
             if (sign == "/") {
                 var x = num1 * num2
-                res(x +" "+ sign +" "+ num2 + " = " + eval(x +""+ sign +""+ num2))
+                result = eval(x +""+ sign +""+ num2)
+                res([x,sign,num2,result])
+                //res(x +" "+ sign +" "+ num2 + " = " + eval(x +""+ sign +""+ num2))
             }else if(sign == "-" && num1 == num2){
                 num1 += 1
-                res(num1 +" "+ sign +" "+ num2 + " = " + eval(num1 +""+ sign +""+ num2))
+                result = eval(num1 +""+ sign +""+ num2)
+                res([num1,sign,num2,result])
+                //res(num1 +" "+ sign +" "+ num2 + " = " + eval(num1 +""+ sign +""+ num2))
             } else {
-                res(num1 +" "+ sign +" "+ num2 + " = " + eval(num1 +""+ sign +""+ num2))
+                result = eval(num1 +""+ sign +""+ num2)
+                res([num1,sign,num2,result])
+                //res(num1 +" "+ sign +" "+ num2 + " = " + eval(num1 +""+ sign +""+ num2))
             }
         } catch (error) {
             rej(error)
