@@ -7,11 +7,11 @@ setInterval( async ()=>{
                 .catch(err => console.log(err))
         ).catch(err => console.log(err))
 
-        var result = await readlineSync.question(mathtask[0] + ' ' + mathtask[1] + ' ' + mathtask[2] + '\n')
+        var result = await readlineSync.question(mathtask[0] + ' ' + mathtask[1] + ' ' + mathtask[2] + ' = ')
         if(result == mathtask[3]){
-            console.log('Richtig')
+            console.log('\nRichtig\n')
         } else {
-            console.log('Falsch')
+            console.log('\nFalsch\n')
         }
         
 },1000)
